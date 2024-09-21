@@ -11,12 +11,16 @@ class TestProcess(unittest.TestCase):
         p = Process("hi")
         self.assertEqual(p.pid, "hi")
         self.assertEqual(p.cycles, 100)
+        self.assertEqual(p.link, None)
+        self.assertEqual(p.prev, None)
 
     def test_init_name_and_cycles(self) -> None:
         """Test initializing pid and cycles."""
         p = Process("hi", 200)
         self.assertEqual(p.pid, "hi")
         self.assertEqual(p.cycles, 200)
+        self.assertEqual(p.link, None)
+        self.assertEqual(p.prev, None)
 
     def test_eq(self) -> None:
         """Test process equality operator."""

@@ -68,9 +68,13 @@ Include at least these four unittests:
 
 * `add_process()` - adds process to end of queue (just before `self._head`). If a process is the only process in a circular queue (i.e. `len(self) == 1`), it's `link` and `prev` attributes should point to itself (see diagram below).
 
+* `kill()` - removes **and returns** a process with the given `pid`. To start, you can do this in O(n) by scanning through your circular queue until you find a process with the correct `pid`. After you find the correct `Process` object, call `remove_process()` (see below) to actually remove it.
+
+    We can do better though - to make this O(1), add a dictionary `self._d_processes` to the queue that maps `pid`s to `Process` objects. This dictionary will need to be updated whenever you add or remove a process (e.g. `self._d_processes[pid] = node` or `self._d_processes.pop(pid)`). See Figure 1 for an illustration of the CircularQueue->Dictionary->Linked Processes connections.
+
 * `remove_process()` - removes **and returns** a specified `Process` from the queue. Note that the input here is the actual `Process` object which should be removed, not its `pid`. See `kill()` for removing based on `pid`.
 
-* `kill()` - removes **and returns** a process with the given `pid`. To make this O(1), add a dictionary to the queue `self._d_processes` that maps `pid`s to `Process` objects. This dictionary will need to be updated whenever you add or remove a process. See Figure 1 for an illustration.
+
 
 ![CircularQueue with one process](./images/CircularQueue_OneProcess.png)
 
@@ -217,7 +221,7 @@ At minimum, submit the following files with the classes and unittests listed. Se
 * `process.py`
     * Contains `Process` class
 
-* `TestProcess.py`
+* `test_process.py`
     * `class TestProcess`
         * `test_init_name`
         * `test_init_name_and_cycles`
@@ -228,7 +232,7 @@ At minimum, submit the following files with the classes and unittests listed. Se
     * imports `Process` class
     * implements `CircularQueue` class
 
-* `TestCircularQueue.py`
+* `test_circularqueue.py`
     * `class TestCircularQueue`
         * `test_init_empty`
         * `test_init_with_processes`
