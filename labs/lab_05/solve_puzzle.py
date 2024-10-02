@@ -19,12 +19,7 @@ def solve_puzzle(board: list[int], idx: int = 0, visited: set = None) -> bool:
     idx_ccw = (idx - board[idx]) % len(board)
 
     # Explore both paths.
-    if solve_puzzle(board, idx_cw, visited) or solve_puzzle(board, idx_ccw, visited):
-        return True
-
-    # Remove this idx from visited. Puzzle not solvable this way.
-    visited.remove(idx)
-    return False
+    return solve_puzzle(board, idx_cw, visited) or solve_puzzle(board, idx_ccw, visited)
 
 
 if __name__ == "__main__":
