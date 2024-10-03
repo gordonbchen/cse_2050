@@ -1,15 +1,15 @@
-def trib(k: int, cache: dict[int, int] | None = None) -> int:
+def trib(k: int) -> int:
     """Return the kth tribonacci number."""
-    if cache is None:
-        cache = {1: 0, 2: 0, 3: 1}
+    return _trib(k, cache={1: 0, 2: 0, 3: 1})
 
+
+def _trib(k: int, cache: dict[int, int]) -> int:
+    """Return the kth tribonacci number."""
     if k in cache:
         return cache[k]
 
-    trib_val = sum(trib(k - i, cache) for i in range(1, 4))
-    cache[k] = trib_val
-
-    return trib_val
+    cache[k] = sum(_trib(k - i, cache) for i in range(1, 4))
+    return cache[k]
 
 
 if __name__ == "__main__":
