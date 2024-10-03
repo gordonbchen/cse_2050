@@ -1,8 +1,10 @@
-def solve_puzzle(board: list[int], idx: int = 0, visited: set = None) -> bool:
+def solve_puzzle(board: list[int]) -> bool:
     """Returns True if a given board is solveable."""
-    if visited is None:
-        visited = set()
+    return _solve_puzzle(board, idx=0, visited=set())
 
+
+def _solve_puzzle(board: list[int], idx: int, visited: set) -> bool:
+    """Returns True if a given board is solveable."""
     # Solved if at the last tile of the puzzle.
     if idx == len(board) - 1:
         return True
@@ -19,7 +21,9 @@ def solve_puzzle(board: list[int], idx: int = 0, visited: set = None) -> bool:
     idx_ccw = (idx - board[idx]) % len(board)
 
     # Explore both paths.
-    return solve_puzzle(board, idx_cw, visited) or solve_puzzle(board, idx_ccw, visited)
+    return _solve_puzzle(board, idx_cw, visited) or _solve_puzzle(
+        board, idx_ccw, visited
+    )
 
 
 if __name__ == "__main__":
