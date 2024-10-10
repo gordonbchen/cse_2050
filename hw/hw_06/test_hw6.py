@@ -1,7 +1,6 @@
 import unittest
 
 from typing import Callable
-from random import randint
 
 from hw6 import bubble_sort, selection_sort, insertion_sort, merge
 
@@ -63,12 +62,22 @@ class SortingTestFactory:
         sorted_vals, swaps = self.sorting_alg(matrix)
         self.assertEqual(sorted_vals, [1, 2, 3, 4, 5])
 
+        # Swap assertion for bubble and insertion.
+        self.assertEqual(swaps, 10)
+
     def test_random(self):
         """Test sorting a random list."""
-        matrix = [[randint(0, 1_000) for i in range(1_000)] for i in range(3)]
+        matrix = [
+            [4, 5, 2, 3, 1],
+            [4, 5, 2, 3, 1],
+            [4, 5, 2, 3, 1],
+        ]
 
         sorted_vals, swaps = self.sorting_alg(matrix)
         self.assertTrue(self.is_sorted(sorted_vals))
+
+        # Swap assertion for bubble and insertion.
+        self.assertEqual(swaps, 8)
 
 
 class TestBubble(SortingTestFactory, unittest.TestCase):
@@ -93,6 +102,34 @@ class TestSelection(SortingTestFactory, unittest.TestCase):
     def setUp(self) -> None:
         """Set up the selection sort algorithm for testing."""
         super().setUp(selection_sort)
+
+    def test_reverse_sorted(self):
+        """Test sorting a reversed list."""
+        matrix = [
+            [5, 4, 3, 2, 1],
+            [5, 4, 3, 2, 1],
+            [5, 4, 3, 2, 1],
+        ]
+
+        sorted_vals, swaps = self.sorting_alg(matrix)
+        self.assertEqual(sorted_vals, [1, 2, 3, 4, 5])
+
+        # Swap assertion for selection sort.
+        self.assertEqual(swaps, 2)
+
+    def test_random(self):
+        """Test sorting a random list."""
+        matrix = [
+            [4, 5, 2, 3, 1],
+            [4, 5, 2, 3, 1],
+            [4, 5, 2, 3, 1],
+        ]
+
+        sorted_vals, swaps = self.sorting_alg(matrix)
+        self.assertTrue(self.is_sorted(sorted_vals))
+
+        # Swap assertion for bubble and insertion.
+        self.assertEqual(swaps, 4)
 
 
 if __name__ == "__main__":
