@@ -115,7 +115,7 @@ def magic_quicksort(
     if right is None:
         right = len(L)
 
-    depth_threshold = 0 if len(L) == 0 else math.log2(len(L)) * 3
+    depth_threshold = 0 if len(L) == 0 else (math.log2(len(L)) + 1) * 3
     _magic_quicksort(L, left, right, depth_threshold, depth, alg_set)
 
     return alg_set
