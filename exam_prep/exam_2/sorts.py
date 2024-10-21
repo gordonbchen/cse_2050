@@ -1,3 +1,5 @@
+import unittest
+
 from random import randint
 
 
@@ -63,6 +65,38 @@ def quick_sort(vals: list[int], left: int = 0, right: int = None) -> None:
     quick_sort(vals, pivot + 1, right)
 
 
+def quick_sort_random_index(vals: list[int], left: int = 0, right: int = None) -> None:
+    """Quick sort."""
+    if right is None:
+        right = len(vals)
+
+    if left >= right:
+        return
+
+    pivot = randint(left, right - 1)
+    vals[pivot], vals[right - 1] = vals[right - 1], vals[pivot]
+
+    pivot = right - 1
+    i = left
+    j = pivot - 1
+
+    while i < j:
+        while vals[i] < vals[pivot]:
+            i += 1
+        while (i < j) and (vals[j] >= vals[pivot]):
+            j -= 1
+
+        if i < j:
+            vals[i], vals[j] = vals[j], vals[i]
+
+    if vals[i] >= vals[pivot]:
+        vals[i], vals[pivot] = vals[pivot], vals[i]
+        pivot = i
+
+    quick_sort_random_index(vals, left, pivot)
+    quick_sort_random_index(vals, pivot + 1, right)
+
+
 def merge_sort(vals: list[int]) -> None:
     """Merge sort."""
     if len(vals) <= 1:
@@ -88,13 +122,68 @@ def merge_sort(vals: list[int]) -> None:
     vals[i + j :] = left[i:] + right[j:]
 
 
-if __name__ == "__main__":
-    sort_funcs = [insertion_sort, bubble_sort, selection_sort, quick_sort, merge_sort]
-    for sort_func in sort_funcs:
-        print(f"\n{sort_func.__name__}")
-        vals = [randint(0, 100) for i in range(20)]
-        true_sorted = sorted(vals)
-        sort_func(vals)
+class SortTestFactory:
+    def test_empty(self) -> None:
+        vals = []
+        self.check_sort_func(vals)
 
-        assert true_sorted == vals
-        print(vals)
+    def test_single_element(self) -> None:
+        vals = [0]
+        self.check_sort_func(vals)
+
+    def test_two_elements(self) -> None:
+        vals = [1, 0]
+        self.check_sort_func(vals)
+
+    def test_sorted(self) -> None:
+        vals = list(range(900))
+        self.check_sort_func(vals)
+
+    def test_reverse_sorted(self) -> None:
+        vals = list(range(900, 0, -1))
+        self.check_sort_func(vals)
+
+    def test_random(self) -> None:
+        for i in [499, 500, 1_000, 1_001]:
+            vals = list(randint(-1_000, 1_000) for j in range(i))
+            self.check_sort_func(vals)
+
+    def check_sort_func(self, vals: list[int]) -> None:
+        """Check that the sort func works on vals."""
+        true_sorted = sorted(vals)
+        self.sort_func(vals)
+        self.assertEqual(true_sorted, vals)
+
+
+class InsertionSortTests(SortTestFactory, unittest.TestCase):
+    def setUp(self) -> None:
+        self.sort_func = insertion_sort
+
+
+class BubbleSortTests(SortTestFactory, unittest.TestCase):
+    def setUp(self) -> None:
+        self.sort_func = bubble_sort
+
+
+class SelectionSortTests(SortTestFactory, unittest.TestCase):
+    def setUp(self) -> None:
+        self.sort_func = selection_sort
+
+
+class QuickSortTests(SortTestFactory, unittest.TestCase):
+    def setUp(self) -> None:
+        self.sort_func = quick_sort
+
+
+class QuickSortRandomIndexTests(SortTestFactory, unittest.TestCase):
+    def setUp(self) -> None:
+        self.sort_func = quick_sort_random_index
+
+
+class MergeSortTests(SortTestFactory, unittest.TestCase):
+    def setUp(self) -> None:
+        self.sort_func = merge_sort
+
+
+if __name__ == "__main__":
+    unittest.main()
