@@ -18,8 +18,6 @@
 
 In this assignment, we use the term *dictionary* to mean a collection of words and their definitions. This has no relationship to the python built-in dict, which implements the Mapping ADT.
 
-<img src="dict.jpg" alt="Class diagram for a Record." width="150"/> 
-
 ## Objective 
 
 This assignment will provide a practical example of using BSTs for dictionary applications and introduce the <span style="color:blue">[TreeSort](https://en.wikipedia.org/wiki/Tree_sort)</span>. algorithm as a sorting mechanism.
