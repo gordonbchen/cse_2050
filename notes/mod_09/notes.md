@@ -26,3 +26,16 @@
     * In-order: left, root, right
     * Post-order: left, right, root
     * Level order: top to bottom, left to right
+
+### 11/6/2024
+* Iterators
+    * __iter__: called with iter()
+    * __next__: called with next(), produces next item, raises StopIteration when done
+    * For is a while loop
+    * Generator: yeild values
+* Binary search tree
+    * left node is less, right node is greater
+    * Tree sort algorithm: in order traverse on BST
+    * ADT: put, get, floor, ceil, remove
+    * Time complexity based on height of tree: best case log2n, worst case n
+    * Node removal: 
