@@ -1,43 +1,78 @@
+from __future__ import annotations
+
+from typing import Any, Iterator
+
+
 class BSTNode:
-    def __init__(self, key, left=None, right=None):
-        """Construct a node. By default, left and right children are None"""
+    """A node in a binary search tree."""
+
+    def __init__(self, key: Any, left: BSTNode | None = None, right: BSTNode | None = None) -> None:
+        """Construct a node. By default, left and right children are None."""
         self.key = key
         self.left = left
         self.right = right
 
-    # classical iteration (correct but slow)
-    def __iter__(self):
-        """Classical iteration. Creates a new iterator object, which takes O(n)
+    # Classic iteration (correct but slow).
+    def __iter__(self) -> BSTNode_Iterator:
+        """
+        Classical iteration. Creates a new iterator object, which takes O(n)
         to construct the in-order list then returns items one at a time.
         """
         return BSTNode_Iterator(self)
 
-    # generator based iteration (fast)
-    def in_order(self):
-        """Generator based iteration. We can return items as soon as we find them,
+    # Generator based iteration (fast).
+    def in_order(self) -> Iterator:
+        """
+        Generator based iteration. We can return items as soon as we find them,
         and the recursive stack we've built stays in memory until the next call
-        due to the `yield` keyword.
+        due to the `yield` keyword. Left, root, right.
         """
         if self.left is not None:
             yield from self.left.in_order()  # recursively go left
+
         yield self.key  # return this key
+
         if self.right is not None:
             yield from self.right.in_order()  # recursively go right
 
-    # TODO: Uncomment this, so Python knows how to print out Nodes
-    def __repr__(self):
-        # return f"BSTNode(key={self.key})"
-        pass
+    def __repr__(self) -> str:
+        """Return a str representation of the BSTNode."""
+        return f"BSTNode(key={self.key})"
 
-    # TODO: implement the 3 methods below. pre_order and post_order will be similar to in_order
-    def put(self, key):
-        pass
+    def put(self, key: Any) -> None:
+        """Add the key to the BST. Ignore duplicate keys."""
+        if self.key == key:
+            return
+        elif key < self.key:
+            if self.left is not None:
+                self.left.put(key)
+            else:
+                self.left = BSTNode(key)
+        else:
+            if self.right is not None:
+                self.right.put(key)
+            else:
+                self.right = BSTNode(key)
 
-    def pre_order(self):
-        pass
+    def pre_order(self) -> Iterator:
+        """Iterate through the BST keys in pre-order (root, left, right)."""
+        yield self.key
 
-    def post_order(self):
-        pass
+        if self.left is not None:
+            yield from self.left.pre_order()
+
+        if self.right is not None:
+            yield from self.right.pre_order()
+
+    def post_order(self) -> Iterator:
+        """Iterate through the BST keys in post-order (left, right, root)."""
+        if self.left is not None:
+            yield from self.left.post_order()
+
+        if self.right is not None:
+            yield from self.right.post_order()
+
+        yield self.key
 
 
 # This technique is slow. We have to queue up the ENTIRE tree before we start
