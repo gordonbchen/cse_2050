@@ -11,5 +11,6 @@
 
     "black-formatter.args": ["--line-length=100"],
 
-    "files.insertFinalNewline": true
+    "files.insertFinalNewline": true,
+    "python.REPL.enableREPLSmartSend": false
 }
