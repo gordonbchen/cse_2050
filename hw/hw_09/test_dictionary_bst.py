@@ -71,6 +71,19 @@ class DictionaryBSTTests(unittest.TestCase):
             bst.print_alphabetical(), sorted(self.get_test_words_meanings(), key=lambda x: x[0])
         )
 
+    def test_balancing(self) -> None:
+        """
+        Test that the internal bst is self-balancing.
+        Not a very rigorous test, but it does ensure that some balancing is being done.
+        Height when inserting sequential items was found experimentally (no proof of correctness).
+        """
+        bst = DictionaryBST()
+
+        for i in range(100):
+            bst.insert("1" * i, "1" * i)
+
+        self.assertTrue(bst.root._calc_height() < 25)
+
 
 if __name__ == "__main__":
     unittest.main()

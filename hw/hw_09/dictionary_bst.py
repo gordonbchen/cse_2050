@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Iterator
 
 
@@ -13,20 +15,77 @@ class Node:
         self.left = None
         self.right = None
 
-    def insert(self, word: str, meaning: str) -> None:
-        """Insert the word into the BST."""
+        self.weight = 0
+
+    def insert(self, word: str, meaning: str, parent: Node | None = None) -> Node:
+        """
+        Insert the word into the BST.
+        Returns the updated node (can change value due to rotation).
+        """
         if self.word == word:
             self.meaning = meaning
         elif word < self.word:
             if self.left is not None:
-                self.left.insert(word, meaning)
+                self.left.insert(word, meaning, parent=self)
             else:
                 self.left = Node(word, meaning)
         else:
             if self.right is not None:
-                self.right.insert(word, meaning)
+                self.right.insert(word, meaning, parent=self)
             else:
                 self.right = Node(word, meaning)
+
+        left_weight, right_weight = self.update_weight()
+        if (max(left_weight, right_weight) + 1) / (min(left_weight, right_weight) + 1) >= 4.0:
+            if left_weight > right_weight:
+                return self.rotate_right(parent)
+            else:
+                return self.rotate_left(parent)
+
+        return self
+
+    def update_weight(self) -> tuple[int, int]:
+        """Update the weight of the node. Return the left and right weights."""
+        left_weight = 0 if self.left is None else self.left.weight
+        right_weight = 0 if self.right is None else self.right.weight
+
+        self.weight = left_weight + right_weight + 1
+
+        return left_weight, right_weight
+
+    def rotate_right(self, parent: Node | None) -> Node:
+        """Rotate right."""
+        old, new = self, self.left
+        old.left = new.right
+        new.right = old
+
+        old.update_weight()
+        new.update_weight()
+
+        if parent is not None:
+            if self.word < parent.word:
+                parent.left = new
+            else:
+                parent.right = new
+
+        return new
+
+    def rotate_left(self, parent: Node | None) -> Node:
+        """Rotate right."""
+        old, new = self, self.right
+        old.right = new.left
+        new.left = old
+
+        old.update_weight()
+        new.update_weight()
+
+        if parent is not None:
+            if self.word < parent.word:
+                parent.left = new
+            else:
+                parent.right = new
+
+        return new
 
     def search(self, word: str) -> str | None:
         """
@@ -51,6 +110,12 @@ class Node:
 
         if self.right is not None:
             yield from self.right.in_order_traverse()
+
+    def _calc_height(self) -> int:
+        """Calculate the height of the bst tree. Only used for internal balance testing."""
+        left_height = 0 if self.left is None else self.left._calc_height()
+        right_height = 0 if self.right is None else self.right._calc_height()
+        return 1 + max(left_height, right_height)
 
 
 class DictionaryBST:
@@ -87,7 +152,7 @@ class DictionaryBST:
         if self.root is None:
             self.root = Node(word, meaning)
         else:
-            self.root.insert(word, meaning)
+            self.root = self.root.insert(word, meaning)
 
     def search(self, word: str) -> None:
         """
@@ -97,7 +162,7 @@ class DictionaryBST:
             word (str): The word to search for.
 
         Returns:
-            str: The meaning of the word if found, else return None'
+            str: The meaning of the word if found, else return None
         """
         if self.root is None:
             return None
