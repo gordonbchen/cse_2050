@@ -24,12 +24,19 @@
         * O(1) to find min, at root
     * Max heap: each root is largest
     * Heap-ordered: every child has a priority at least as large as self priority
-    * No in-order travers, check branches top to bottom 
+    * No in-order traverse, check branches top to bottom 
     * Items may not be all unique (less than or equal)
     * Use list to implement heap, traverse top-to-bottom, left-to-right
     * Find parent: index = i, parent = (i - 1) // 2
-    * Fing left and right children: index = i, left = (i * 2) + 1, right = (i * 2) + 2
+    * Find left and right children: index = i, left = (i * 2) + 1, right = (i * 2) + 2
     * Insert: append to list, then recursively swap with parent if smaller (upheap)
         * O(logn), O(height of tree, always complete)
 
-
+### 11/13/2024
+* Heap (complete binary tree) represented as list
+    * left child: (2 * i) + 1
+    * right child: (2 * i) + 2
+    * parent: (i - 1) // 2
+    * insert (append, upheap): append to list, recursively swap with parent if less than parent, O(logn)
+    * find_min: return root, O(1)
+    * remove_min (swap, then downheap): swap root with last element, remove last element (old root), recursively swap with min child
