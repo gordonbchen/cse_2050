@@ -80,3 +80,13 @@ class HeapPriorityQueue:
             if self._entries[min_child] < self._entries[idx]:
                 self._swap(min_child, idx)
                 self._down_heap(min_child)
+
+    def _up_heapify(self) -> None:
+        """O(nlogn) heapify using upheap."""
+        for i in range(len(self._entries)):
+            self._up_heap(i)
+
+    def _down_heapify(self) -> None:
+        """O(n) heapify using downheap."""
+        for i in reversed(range(len(self._entries) // 2)):
+            self._down_heap(i)

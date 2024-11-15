@@ -40,3 +40,27 @@
     * insert (append, upheap): append to list, recursively swap with parent if less than parent, O(logn)
     * find_min: return root, O(1)
     * remove_min (swap, then downheap): swap root with last element, remove last element (old root), recursively swap with min child
+
+### 11/15/2024
+* Priority Queue implementations:
+    * List: O(1) insert, O(n) find_min, O(n) remove_min
+    * SortedList: O(n) insert), O(1) find_min, O(1) remove_min
+    * Min heap (aka complete binary tree represented as a list)
+        * insert: O(logn), upheap
+        * find_min: O(l), root
+        * remove_min: O(logn), downheap
+* Build a heap from scratch (from an unsorted list), aka heapify
+    * Upheapify: start from root and use upheap
+        * Iterate through list, upheap, recursively swap with parent if lower
+        * O(nlogn), n iterations, logn upheap
+    * Downheapify:
+        * n nodes, n/2 leaf nodes
+        * iterate fromm n/2 to 0, call downheap
+        * leaves don't have to be downheaped
+        * O(n)
+* Changing priorities:
+    * maxheap: increase priority and upheap O(logn)
+* Heapsort: get a sorted list out of a heap, inplace
+    * have maxheap, root will be max. swap root with last element, take last element out of the heap, and downheap new root
+    * repeat with new root.
+    * O(nlogn), in-place
