@@ -1,13 +1,17 @@
+import unittest
+import random
+
 from entry import Entry
-import unittest, random
-random.seed(658) # fix seed so we always fail with the same numbers (makes debugging easier)
+
+random.seed(658)  # fix seed so we always fail with the same numbers (makes debugging easier)
+
 
 class TestEntry(unittest.TestCase):
     def setUp(self):
         """A few entries to test"""
-        self.e1 = Entry(item='jake', priority=0)
-        self.e2 = Entry(item='rachel', priority=0)
-        self.e3 = Entry(item='jake', priority=1)
+        self.e1 = Entry(item="jake", priority=0)
+        self.e2 = Entry(item="rachel", priority=0)
+        self.e3 = Entry(item="jake", priority=1)
 
     def test_eq(self):
         """Tests that equality is defined by priority"""
@@ -27,5 +31,6 @@ class TestEntry(unittest.TestCase):
         self.assertEqual(repr(self.e2), "Entry(item=rachel, priority=0)")
         self.assertEqual(repr(self.e3), "Entry(item=jake, priority=1)")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
