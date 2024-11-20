@@ -25,8 +25,41 @@
 * Graph ADT implementations
     * Edge set: store a set of verticies V and a set of edges E
         * add_vertex: O(1)
-        * remove_vertex: O(E), iterate through edges, removing edges with vertex
+        * remove_vertex: O(1), O(E) if you have to remove edges with vertex
         * add_edge: O(1)
         * remove_edge: O(1)
         * get_neighbors: O(E), iterate through all edges, check if source is v,
         * problem: slow to find neighbors
+
+# 11/20/2024
+* Graph: set of vertexes V, set of edges E
+    * Directed: u -> v
+    * Undirected (also doubly directed): u <-> v
+    * Degree: # edges in / out
+* Graph ADT:
+    * add/remove vertex
+    * add/remove edge
+    * get_neigbors: traverse the graph
+* Edge set implementation
+    * Stores a set of vertices V, and edges E
+    * Problem: iterate through all edges to get neighbors of a single vertex O(E)
+* Adjacency set implementation
+    * Store a set of vertices V and dictionary of neighbors for each vertex
+    * add_vertex: O(1)
+    * remove_vertex: O(1), O(E) if you have to remove edges with vertex
+    * add_edge: O(1)
+    * remove_edge: O(1)
+    * get_neighbors: O(1) to get neighbors, O(degree(V)) to iterate through neighbors
+* Path: list of verticies with edges inbetween
+    * Simple path: no repeated vertices
+    * Path length = number of edges
+    * Cycle: path where all vertices are distinct, except start vertex = end vertex
+* Connectivity
+    * Directed
+        * Strongly connected: exists a path from every vertex u to v
+        * Disconnected graph: multiple graph components
+        * Complete / fully connected graph: exists edge from every vertex u to v
+    * Undirected:
+        * Connected exists path from every vertex u to v
+        * Complete: exists edge from every vertex u to v
+    * Testing if notes are connected: recursively check if the target is a neighbor, add visited set to prevent recursion error from cycles
