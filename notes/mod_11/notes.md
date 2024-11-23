@@ -63,3 +63,15 @@
         * Connected exists path from every vertex u to v
         * Complete: exists edge from every vertex u to v
     * Testing if notes are connected: recursively check if the target is a neighbor, add visited set to prevent recursion error from cycles
+
+# 11/22/2024
+* Building an adjacency set: O(V + E), dictionary with V entries, E edges
+    * 2E entries in set if undirected graph
+* Adjacency matrix, sparse matrix, 1 if edge b/t vertices, O(V^2)
+* Depth first search: start from source vertex, recursively move to neighbor until found or dead end, then backtrack
+    * Stack implementation: insert neighbors, pop element, insert into set of visited
+    * O(V + E), visit v vertices and all edges
+    * Does not guarentee finding the shortest path, guarentees finding a path
+* Breadth first search
+    * Guarentees finding shortest path
+    * Queue implementation: explore all neighbors first, then neighbors neighbors, and so on

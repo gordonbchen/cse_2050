@@ -101,6 +101,36 @@ class AdjacencySet:
                 return True
         return False
 
+    def depth_first_search_iter(self, v):
+        tree = {}
+        to_visit = [(None, v)]
+
+        while len(to_visit) > 0:
+            src, dest = to_visit.pop()
+            if dest in tree:
+                continue
+
+            tree[dest] = src
+            for neighbor in self.get_neighbors(dest):
+                to_visit.append((dest, neighbor))
+
+        return tree
+
+    def breadth_first_search_iter(self, v):
+        tree = {}
+        to_visit = [(None, v)]
+
+        while len(to_visit) > 0:
+            src, dest = to_visit.pop(0)
+            if dest in tree:
+                continue
+
+            tree[dest] = src
+            for neighbor in self.get_neighbors(dest):
+                to_visit.append((dest, neighbor))
+
+        return tree
+
 
 if __name__ == "__main__":
     V = {1, 2, 3, 4}
