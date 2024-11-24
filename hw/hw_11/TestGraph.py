@@ -233,5 +233,17 @@ class TestEdge(GraphTestFactory, unittest.TestCase):
         return frozenset((v1, v2)) in graph._E
 
 
+class TestGraphADT(unittest.TestCase):
+    """Test the abstract graph ADT."""
+
+    def test_init_not_implemented(self) -> None:
+        """Check that trying to init the abstract Graph class raises an error."""
+        with self.assertRaises(NotImplementedError):
+            Graph()
+
+        with self.assertRaises(NotImplementedError):
+            Graph(V={1, 2, 3}, E={(1, 2), (2, 3)})
+
+
 if __name__ == "__main__":
     unittest.main()
