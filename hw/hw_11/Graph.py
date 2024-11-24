@@ -126,12 +126,11 @@ class EdgeSetGraph(Graph):
 
     def nbrs(self, v: Any) -> Iterator:
         """Yield all neighbors of v."""
-        for e in self._E:
-            edge_tuple = tuple(e)
-            if edge_tuple[0] == v:
-                yield edge_tuple[1]
-            elif edge_tuple[1] == v:
-                yield edge_tuple[0]
+        for v1, v2 in self._E:
+            if v1 == v:
+                yield v2
+            elif v2 == v:
+                yield v1
 
 
 class AdjacencySetGraph(Graph):
