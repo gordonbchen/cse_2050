@@ -61,7 +61,8 @@ class Graph:
             bfs_tree[target] = src
 
             for neighbor in self.nbrs(target):
-                to_visit.put((target, neighbor))
+                if neighbor not in bfs_tree:
+                    to_visit.put((target, neighbor))
 
         return bfs_tree
 
