@@ -58,7 +58,7 @@ class BSTNode:
         left_height = self.left.height if self.left else -1
         right_height = self.right.height if self.right else -1
 
-        self.height = max(left_height + right_height) + 1
+        self.height = max(left_height, right_height) + 1
 
         return left_height, right_height
 
